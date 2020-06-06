@@ -12,6 +12,10 @@ using Onlinewallet.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using OnlineWallet.Infrastructure.DatabaseContext;
 using OnlineWallet.Infrastructure.IntegrationServices;
+using Onlinewallet.Core.RepositoryInterfaces;
+using OnlineWallet.Infrastructure.Repositories;
+using Onlinewallet.Core.ServiceInterfaces;
+using OnlineWallet.Infrastructure.Services;
 
 namespace OnlineWalletApi
 {
@@ -28,8 +32,19 @@ namespace OnlineWalletApi
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services.AddDbContext<WalletDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IPoolCurrenciesService, PoolCurrenciesService>();
+
+            //Inject repositories
+            services.AddTransient<ICurrencyRepository, CurrencyRepository>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
+            services.AddTransient<IWalletRepository, WalletRepository>();
+
+            //Inject services
+            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IWalletService, WalletService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,10 +59,7 @@ namespace OnlineWalletApi
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
         }
     }
