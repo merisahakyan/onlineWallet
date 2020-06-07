@@ -10,6 +10,7 @@ namespace Onlinewallet.Core.ServiceInterfaces
     public interface IWalletService
     {
         List<Currency> GetAvailableCurrencies();
+        List<UserWalletViewModel> GetUserWallet(int userId);
         void CreateNewWallet(WalletViewModel wallet);
         void AddMoneyToWallet(int walletId, decimal value);
         void RemoveMoneyFromWallet(int walletId, decimal value);

@@ -20,6 +20,25 @@ namespace OnlineWalletApi.Controllers
         }
 
         /// <summary>
+        /// Get user's wallet
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{userId}")]
+        public IActionResult Get(int userId)
+        {
+            try
+            {
+                var currencies = _walletService.GetUserWallet(userId);
+                return Ok(currencies);
+            }
+            //TODO :  improve application to have global exception handler
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// create new wallet for user
         /// </summary>
         /// <returns></returns>

@@ -107,6 +107,26 @@ namespace OnlineWallet.Infrastructure.Services
             return _currencyRepository.GetAll().ToList();
         }
 
+        /// <summary>
+        /// Returns user's wallet with currencies and amount of money
+        /// </summary>
+        /// <param name="userId">the user id</param>
+        /// <returns></returns>
+        public List<UserWalletViewModel> GetUserWallet(int userId)
+        {
+            var userWallets = _walletRepository.GetAll().Where(w => w.UserId == userId);
+            return userWallets.Select(u => new UserWalletViewModel
+            {
+                Currency = u.Currency.Name,
+                Value = u.Value
+            }).ToList();
+        }
+
+        /// <summary>
+        /// remove money from wallet
+        /// </summary>
+        /// <param name="walletId">id of the wallet</param>
+        /// <param name="value">amout of money</param>
         public void RemoveMoneyFromWallet(int walletId, decimal value)
         {
             var wallet = _walletRepository.GetSingle(walletId);
