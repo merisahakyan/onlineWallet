@@ -118,6 +118,7 @@ namespace OnlineWallet.Infrastructure.Services
             var userWallets = _walletRepository.GetAll().Where(w => w.UserId == userId);
             return await userWallets.Select(u => new UserWalletViewModel
             {
+                WalletId = u.Id,
                 Currency = u.Currency.Name,
                 Value = u.Value
             }).ToListAsync();

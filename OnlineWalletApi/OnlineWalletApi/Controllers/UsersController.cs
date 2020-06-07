@@ -28,8 +28,8 @@ namespace OnlineWalletApi.Controllers
         {
             try
             {
-                await _usersService.CreateUserAsync(user);
-                return Ok();
+                var id = await _usersService.CreateUserAsync(user);
+                return Ok(id);
             }
             //TODO :  improve application to have global exception handler
             catch (Exception ex)

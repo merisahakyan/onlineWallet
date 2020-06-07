@@ -9,6 +9,6 @@ namespace Onlinewallet.Core.ServiceInterfaces
 {
     public interface IUsersService
     {
-        Task CreateUserAsync(UserViewModel user);
+        Task<int> CreateUserAsync(UserViewModel user);
     }
 }

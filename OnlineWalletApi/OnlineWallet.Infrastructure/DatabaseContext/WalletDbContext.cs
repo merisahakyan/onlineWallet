@@ -13,6 +13,10 @@ namespace OnlineWallet.Infrastructure.DatabaseContext
     {
         readonly IPoolCurrenciesService _poolerService;
 
+        public WalletDbContext()
+        {
+
+        }
         public WalletDbContext(IPoolCurrenciesService poolerService, DbContextOptions<WalletDbContext> options)
            : base(options)
         {

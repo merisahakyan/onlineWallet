@@ -16,9 +16,9 @@ namespace OnlineWallet.Infrastructure.Services
         {
             _userRepository = userRepository;
         }
-        public async Task CreateUserAsync(UserViewModel user)
+        public async Task<int> CreateUserAsync(UserViewModel user)
         {
-            _userRepository.Add(new User
+            var dbUser = new User
             {
                 Address = user.Address,
                 City = user.City,
@@ -29,8 +29,11 @@ namespace OnlineWallet.Infrastructure.Services
                 Mobile = user.Mobile,
                 Passport = user.Passport,
                 PostalCode = user.PostalCode
-            });
+            };
+            _userRepository.Add(dbUser);
             await _userRepository.SaveChangesAsync();
+
+            return dbUser.Id;
         }
     }
 }
