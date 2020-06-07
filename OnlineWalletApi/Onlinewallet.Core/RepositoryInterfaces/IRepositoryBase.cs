@@ -15,5 +15,6 @@ namespace Onlinewallet.Core.RepositoryInterfaces
         void Add(T entity);
         void Delete(int id);
         void SaveChanges();
+        Task SaveChangesAsync();
     }
 }

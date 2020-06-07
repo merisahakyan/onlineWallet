@@ -9,11 +9,11 @@ namespace Onlinewallet.Core.ServiceInterfaces
 {
     public interface IWalletService
     {
-        List<Currency> GetAvailableCurrencies();
-        List<UserWalletViewModel> GetUserWallet(int userId);
-        void CreateNewWallet(WalletViewModel wallet);
-        void AddMoneyToWallet(int walletId, decimal value);
-        void RemoveMoneyFromWallet(int walletId, decimal value);
+        Task<List<Currency>> GetAvailableCurrenciesAsync();
+        Task<List<UserWalletViewModel>> GetUserWalletAsync(int userId);
+        Task CreateNewWalletAsync(WalletViewModel wallet);
+        Task AddMoneyToWalletAsync(int walletId, decimal value);
+        Task RemoveMoneyFromWalletAsync(int walletId, decimal value);
         Task DoExchangeAsync(int fromWalletId, int toWalletId, decimal value);
     }
 }

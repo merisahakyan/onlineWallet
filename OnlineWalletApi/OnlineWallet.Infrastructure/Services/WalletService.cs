@@ -1,4 +1,5 @@
-﻿using Onlinewallet.Core.Database.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Onlinewallet.Core.Database.Entities;
 using Onlinewallet.Core.Models.ViewModels;
 using Onlinewallet.Core.RepositoryInterfaces;
 using Onlinewallet.Core.ServiceInterfaces;
@@ -31,7 +32,7 @@ namespace OnlineWallet.Infrastructure.Services
         /// </summary>
         /// <param name="walletId"></param>
         /// <param name="value"></param>
-        public void AddMoneyToWallet(int walletId, decimal value)
+        public async Task AddMoneyToWalletAsync(int walletId, decimal value)
         {
             var wallet = _walletRepository.GetSingle(walletId);
             if (wallet == null)
@@ -40,14 +41,14 @@ namespace OnlineWallet.Infrastructure.Services
 
             wallet.Value += value;
             _walletRepository.Update(wallet);
-            _walletRepository.SaveChanges();
+            await _walletRepository.SaveChangesAsync();
         }
 
         /// <summary>
         /// Create new wallet for user
         /// </summary>
         /// <param name="wallet">Model contains user id and currency id for wallet</param>
-        public void CreateNewWallet(WalletViewModel wallet)
+        public async Task CreateNewWalletAsync(WalletViewModel wallet)
         {
             _walletRepository.Add(new Wallet
             {
@@ -55,7 +56,7 @@ namespace OnlineWallet.Infrastructure.Services
                 UserId = wallet.UserId,
                 Value = 0
             });
-            _walletRepository.SaveChanges();
+            await _walletRepository.SaveChangesAsync();
         }
 
         /// <summary>
@@ -95,16 +96,16 @@ namespace OnlineWallet.Infrastructure.Services
 
             _walletRepository.Update(fromWallet);
             _walletRepository.Update(toWallet);
-            _walletRepository.SaveChanges();
+            await _walletRepository.SaveChangesAsync();
         }
 
         /// <summary>
         /// Get available currencies for creating wallet
         /// </summary>
         /// <returns></returns>
-        public List<Currency> GetAvailableCurrencies()
+        public async Task<List<Currency>> GetAvailableCurrenciesAsync()
         {
-            return _currencyRepository.GetAll().ToList();
+            return await _currencyRepository.GetAll().ToListAsync();
         }
 
         /// <summary>
@@ -112,14 +113,14 @@ namespace OnlineWallet.Infrastructure.Services
         /// </summary>
         /// <param name="userId">the user id</param>
         /// <returns></returns>
-        public List<UserWalletViewModel> GetUserWallet(int userId)
+        public async Task<List<UserWalletViewModel>> GetUserWalletAsync(int userId)
         {
             var userWallets = _walletRepository.GetAll().Where(w => w.UserId == userId);
-            return userWallets.Select(u => new UserWalletViewModel
+            return await userWallets.Select(u => new UserWalletViewModel
             {
                 Currency = u.Currency.Name,
                 Value = u.Value
-            }).ToList();
+            }).ToListAsync();
         }
 
         /// <summary>
@@ -127,7 +128,7 @@ namespace OnlineWallet.Infrastructure.Services
         /// </summary>
         /// <param name="walletId">id of the wallet</param>
         /// <param name="value">amout of money</param>
-        public void RemoveMoneyFromWallet(int walletId, decimal value)
+        public async Task RemoveMoneyFromWalletAsync(int walletId, decimal value)
         {
             var wallet = _walletRepository.GetSingle(walletId);
             if (wallet == null)
@@ -140,7 +141,7 @@ namespace OnlineWallet.Infrastructure.Services
 
             wallet.Value -= value;
             _walletRepository.Update(wallet);
-            _walletRepository.SaveChanges();
+            await _walletRepository.SaveChangesAsync();
         }
     }
 }

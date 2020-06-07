@@ -24,11 +24,11 @@ namespace OnlineWalletApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post([FromBody] UserViewModel user)
+        public async Task<IActionResult> PostAsync([FromBody] UserViewModel user)
         {
             try
             {
-                _usersService.CreateUser(user);
+                await _usersService.CreateUserAsync(user);
                 return Ok();
             }
             //TODO :  improve application to have global exception handler

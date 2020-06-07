@@ -24,11 +24,11 @@ namespace OnlineWalletApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("{userId}")]
-        public IActionResult Get(int userId)
+        public async Task<IActionResult> GetAsync(int userId)
         {
             try
             {
-                var currencies = _walletService.GetUserWallet(userId);
+                var currencies = await _walletService.GetUserWalletAsync(userId);
                 return Ok(currencies);
             }
             //TODO :  improve application to have global exception handler
@@ -43,11 +43,11 @@ namespace OnlineWalletApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post([FromBody] WalletViewModel wallet)
+        public async Task<IActionResult> PostAsync([FromBody] WalletViewModel wallet)
         {
             try
             {
-                _walletService.CreateNewWallet(wallet);
+                await _walletService.CreateNewWalletAsync(wallet);
                 return Ok();
             }
             //TODO :  improve application to have global exception handler
@@ -62,11 +62,11 @@ namespace OnlineWalletApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("add/{id}")]
-        public IActionResult AddMoney(int id, [FromBody] decimal value)
+        public async Task<IActionResult> AddMoneyAsync(int id, [FromBody] decimal value)
         {
             try
             {
-                _walletService.AddMoneyToWallet(id, value);
+                await _walletService.AddMoneyToWalletAsync(id, value);
                 return Ok();
             }
             //TODO :  improve application to have global exception handler
@@ -81,11 +81,11 @@ namespace OnlineWalletApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("remove/{id}")]
-        public IActionResult RemoveMoney(int id, [FromBody] decimal value)
+        public async Task<IActionResult> RemoveMoneyAsync(int id, [FromBody] decimal value)
         {
             try
             {
-                _walletService.RemoveMoneyFromWallet(id, value);
+                await _walletService.RemoveMoneyFromWalletAsync(id, value);
                 return Ok();
             }
             //TODO :  improve application to have global exception handler

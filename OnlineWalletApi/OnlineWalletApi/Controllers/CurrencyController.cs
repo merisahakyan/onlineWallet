@@ -27,7 +27,7 @@ namespace OnlineWalletApi.Controllers
         {
             try
             {
-                var currencies = _walletService.GetAvailableCurrencies();
+                var currencies = _walletService.GetAvailableCurrenciesAsync();
                 return Ok(currencies);
             }
             //TODO :  improve application to have global exception handler

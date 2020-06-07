@@ -3,11 +3,12 @@ using Onlinewallet.Core.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Onlinewallet.Core.ServiceInterfaces
 {
     public interface IUsersService
     {
-        void CreateUser(UserViewModel user);
+        Task CreateUserAsync(UserViewModel user);
     }
 }

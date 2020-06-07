@@ -5,6 +5,7 @@ using Onlinewallet.Core.ServiceInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace OnlineWallet.Infrastructure.Services
 {
@@ -15,7 +16,7 @@ namespace OnlineWallet.Infrastructure.Services
         {
             _userRepository = userRepository;
         }
-        public void CreateUser(UserViewModel user)
+        public async Task CreateUserAsync(UserViewModel user)
         {
             _userRepository.Add(new User
             {
@@ -29,7 +30,7 @@ namespace OnlineWallet.Infrastructure.Services
                 Passport = user.Passport,
                 PostalCode = user.PostalCode
             });
-            _userRepository.SaveChanges();
+            await _userRepository.SaveChangesAsync();
         }
     }
 }

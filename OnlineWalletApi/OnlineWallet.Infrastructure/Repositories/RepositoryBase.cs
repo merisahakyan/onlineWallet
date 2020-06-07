@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace OnlineWallet.Infrastructure.Repositories
 {
@@ -59,6 +60,11 @@ namespace OnlineWallet.Infrastructure.Repositories
         public void SaveChanges()
         {
             Context.SaveChanges();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await Context.SaveChangesAsync();
         }
     }
 }
